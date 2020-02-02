@@ -23,10 +23,10 @@ function filterSpaces(state, screen_id) {
   if (state.yabai.displays) {
     const display = state.yabai.displays.find(display => display.id === screen_id);
     if (display) {
-      state.yabai.spaces = state.yabai.spaces.filter(space => space.display === display.index);
+      return state.yabai.spaces.filter(space => space.display === display.index);
     }
   }
-  return state;
+  return [];
 }
 
 // Grabs the display ID off of the URL
@@ -52,24 +52,24 @@ export const updateState = (event, state) => {
     } else {
       state.yabai = data;
     }
+    break;
   }
-  state = filterSpaces(state, displayId());
   return state;
 };
 
 
-export const render = ({ yabai, screen_id }) => {
-  console.log("render", yabai, screen_id);
-  if (yabai.error) {
+export const render = (state) => {
+  if (state.yabai.error) {
     return (
       <div style={style}>
-        <Error msg={`Error: ${yabai.error}`} side="left" />
+        <Error msg={`Error: ${state.yabai.error}`} side="left" />
       </div>
     );
   }
+  const spaces = filterSpaces(state, displayId());
   return (
     <div style={style}>
-      <Desktop output={yabai.spaces} />
+      <Desktop output={spaces} />
     </div>
   );
 };
