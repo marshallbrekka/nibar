@@ -13,6 +13,7 @@ const desktopStyle = {
   paddingTop: "3px",
   paddingBottom: "2px",
   color: styles.colors.dim,
+  marginRight: "1px",
 };
 
 const hasWindowsStyle = {
