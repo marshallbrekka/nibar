@@ -40,7 +40,7 @@ function spaceLabel(index, label) {
   if (label == "") {
     return index;
   }
-  return label.split("-").pop();
+  return label.split(":").pop();
 }
 
 const renderSpace = ({index, focused, visible, windows, label}) => {
