@@ -1,5 +1,17 @@
 import styles from "./styles.jsx";
 
+const symbols = {
+  layers: "􀏧",
+  grid_2: "􀏠",
+  grid_3: "􀏝",
+  grid_4: "􀇷",
+  grid_6: "􀏣",
+  stacked: "􀏭",
+  floating: "􀇴",
+  frame: "􀎹",
+  fullscreen: "􀏃",
+}
+
 const containerStyle = {
   display: "grid",
   gridAutoFlow: "column",
@@ -7,31 +19,31 @@ const containerStyle = {
 };
 
 const desktopStyle = {
-  lineHeight: "17px",
+  lineHeight: "18px",
   width: "4ch",
   textAlign: "center",
-  paddingTop: "3px",
+  paddingTop: "2px",
   paddingBottom: "2px",
-  color: styles.colors.dim,
+  color: styles.colors.disabled,
   marginRight: "1px",
 };
 
 const hasWindowsStyle = {
-  paddingTop: "2px",
-  borderTop: `1px solid ${styles.colors.fg}`,
-  color: styles.colors.fg,
+  color: styles.colors.bg,
+  // paddingTop: "2px",
+  // borderTop: `1px solid ${styles.colors.fg}`,
+  // color: styles.colors.fg,
 };
 
 const visibleStyle = {
-  background: "rgba(255, 255, 255, 0.1)",
+  background: styles.colors.fgBackgroundInactive,
   color: styles.colors.fg,
 };
 
 const focusedStyle = {
   borderTopColor: styles.colors.accent,
-  background: "rgba(255, 255, 255, 0.1)",
-  color: styles.colors.accent,
-  fontWeight: "700",
+  background: styles.colors.fgBackground,
+  color: styles.colors.fg,
 };
 
 // Extracts the space number from the label.
@@ -71,8 +83,19 @@ const render = ({ output }) => {
     spaces.push(renderSpace(space));
   });
 
+  let symbol = symbols.layers
+  const focusedLayout = output.
+	filter(space => space.visible == 1).
+	map(space => space.type)[0]
+  if (focusedLayout === "bsp") {
+    symbol = symbols.grid_3
+  } else if (focusedLayout == "float") {
+    symbol = symbols.floating
+  }
+
   return (
     <div style={containerStyle}>
+      <span style={desktopStyle}>{symbol}</span>
       {spaces}
     </div>
   );
