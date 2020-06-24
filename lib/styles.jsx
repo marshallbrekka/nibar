@@ -7,9 +7,8 @@ export default {
     fgBackgroundInactive: "rgba(41, 107, 210, 0.4)",
     background: "rgb(43, 46, 55)",
     empty: "rgb(89, 91, 97)",
-    // fg: "#bcbcbc",
     dim: "rgb(24,28,43)",
-    red: "rgb(255, 90, 0)",
+    red: "rgb(255, 45, 20)",
     accent: "#5fafaf"
   },
   fontSize: "13px",

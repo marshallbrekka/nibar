@@ -30,9 +30,6 @@ const desktopStyle = {
 
 const hasWindowsStyle = {
   color: styles.colors.bg,
-  // paddingTop: "2px",
-  // borderTop: `1px solid ${styles.colors.fg}`,
-  // color: styles.colors.fg,
 };
 
 const visibleStyle = {
@@ -41,13 +38,12 @@ const visibleStyle = {
 };
 
 const focusedStyle = {
-  borderTopColor: styles.colors.accent,
   background: styles.colors.fgBackground,
   color: styles.colors.fg,
 };
 
 // Extracts the space number from the label.
-// Expects label in the form of "display-<n>_space-<n>".
+// Expects label in the form of "d:<displayUUID>:<spaceNumber>".
 function spaceLabel(index, label) {
   if (label == "") {
     return index;
@@ -57,7 +53,6 @@ function spaceLabel(index, label) {
 
 const renderSpace = ({index, focused, visible, windows, label}) => {
   let contentStyle = Object.assign({}, desktopStyle);
-  // let contentStyle = JSON.parse(JSON.stringify(desktopStyle));
   let hasWindows = windows.length > 0;
   if (windows.length > 0) {
     contentStyle = Object.assign(contentStyle, hasWindowsStyle);

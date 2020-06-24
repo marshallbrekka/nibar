@@ -1,3 +1,4 @@
+import styles from "./styles.jsx";
 const render = ({ output }) => {
   if (typeof output === "undefined") return null;
   const status = output.status;
