@@ -1,4 +1,48 @@
 import styles from "./styles.jsx";
+import { css } from "uebersicht"
+
+const symbols = {
+  layers: "􀏧",
+  grid_2: "􀏠",
+  grid_3: "􀏝",
+  grid_4: "􀇷",
+  grid_6: "􀏣",
+  stacked: "􀏭",
+  floating: "􀇴",
+  frame: "􀎹",
+  fullscreen: "􀏃",
+}
+
+const containerCSS = css({
+  display: "grid",
+  gridAutoFlow: "column",
+  gridGap: "0px"
+})
+
+const desktopCSS = css({
+  lineHeight: "18px",
+  width: "4ch",
+  textAlign: "center",
+  paddingTop: "2px",
+  paddingBottom: "2px",
+  color: styles.colors.disabled,
+  marginRight: "1px",
+})
+
+const hasWindowsCSS = css({
+  color: styles.colors.bg,
+})
+
+
+const visibleCSS = css({
+  background: styles.colors.fgBackgroundInactive,
+  color: styles.colors.fg,
+})
+
+const focusedCSS = css({
+  background: styles.colors.fgBackground,
+  color: styles.colors.fg,
+})
 
 const containerStyle = {
   display: "grid",
@@ -7,60 +51,55 @@ const containerStyle = {
 };
 
 const desktopStyle = {
-  lineHeight: "17px",
+  lineHeight: "18px",
   width: "4ch",
   textAlign: "center",
-  paddingTop: "3px",
+  paddingTop: "2px",
   paddingBottom: "2px",
-  color: styles.colors.dim,
+  color: styles.colors.disabled,
   marginRight: "1px",
 };
 
-const hasWindowsStyle = {
-  paddingTop: "2px",
-  borderTop: `1px solid ${styles.colors.fg}`,
-  color: styles.colors.fg,
-};
-
-const visibleStyle = {
-  background: "rgba(255, 255, 255, 0.1)",
-  color: styles.colors.fg,
-};
-
-const focusedStyle = {
-  borderTopColor: styles.colors.accent,
-  background: "rgba(255, 255, 255, 0.1)",
-  color: styles.colors.accent,
-  fontWeight: "700",
-};
-
 // Extracts the space number from the label.
-// Expects label in the form of "display-<n>_space-<n>".
+// Expects label in the form of "d:<displayUUID>:<spaceNumber>".
 function spaceLabel(index, label) {
   if (label == "") {
     return index;
   }
-  return label.split("-").pop();
+  return label.split(":").pop();
 }
-
-const renderSpace = ({index, focused, visible, windows, label}) => {
-  let contentStyle = Object.assign({}, desktopStyle);
-  // let contentStyle = JSON.parse(JSON.stringify(desktopStyle));
-  let hasWindows = windows.length > 0;
+function renderSpace({index, focused, visible, windows, label}) {
+  let className = [desktopCSS]
   if (windows.length > 0) {
-    contentStyle = Object.assign(contentStyle, hasWindowsStyle);
+      className.push(hasWindowsCSS)
   }
   if (visible == 1) {
-    contentStyle = Object.assign(contentStyle, visibleStyle);
+      className.push(visibleCSS)
   }
   if (focused == 1) {
-    contentStyle = Object.assign(contentStyle, focusedStyle);
+      className.push(focusedCSS)
   }
 
   return (
-    <div key={label} style={contentStyle}>{spaceLabel(index, label)}</div>
-  );
-};
+      <div key={label} className={className.join(" ")}>{spaceLabel(index, label)}</div>
+  )
+}
+
+function renderLayoutSymbol(output) {
+    let symbol = symbols.layers
+    const focusedLayout = output.
+	  filter(space => space.visible == 1).
+	  map(space => space.type)[0]
+    if (focusedLayout === "bsp") {
+	symbol = symbols.grid_3
+    } else if (focusedLayout == "float") {
+	symbol = symbols.floating
+    }
+    return (
+	<div className={desktopCSS} key="space-layout">{symbol}</div>
+    );
+}
+
 
 const render = ({ output }) => {
   if (typeof output === "undefined") return null;
@@ -72,7 +111,8 @@ const render = ({ output }) => {
   });
 
   return (
-    <div style={containerStyle}>
+    <div className={containerCSS}>
+      {renderLayoutSymbol(output)}
       {spaces}
     </div>
   );

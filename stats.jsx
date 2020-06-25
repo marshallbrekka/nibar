@@ -17,11 +17,11 @@ const style = {
   overflow: "hidden",
   right: "0px",
   top: "0px",
-  color: styles.colors.dim,
+  color: styles.colors.bg,
   fontFamily: styles.fontFamily,
   fontSize: styles.fontSize,
   lineHeight: styles.lineHeight,
-  fontWeight: styles.fontWeight
+  // fontWeight: styles.fontWeight
 };
 
 export const refreshFrequency = 10000;
@@ -40,8 +40,8 @@ export const render = ({ output }) => {
   return (
     <div style={style}>
       <Netstats output={data.netstats} />
-      <Wifi output={data.wifi} />
       <Cpu output={data.cpu} />
+      <Wifi output={data.wifi} />
       <Battery output={data.battery} />
       <DateTime output={data.datetime} />
       <Dnd output={data.dnd} />

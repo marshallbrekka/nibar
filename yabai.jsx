@@ -4,7 +4,7 @@ import parse from "./lib/parse.jsx";
 import styles from "./lib/styles.jsx";
 
 const style = {
-  padding: "0 12px",
+  padding: "0 0px",
   display: "grid",
   gridAutoFlow: "column",
   gridGap: "16px",
@@ -15,7 +15,7 @@ const style = {
   fontFamily: styles.fontFamily,
   lineHeight: styles.lineHeight,
   fontSize: styles.fontSize,
-  color: styles.colors.dim,
+  color: styles.colors.bg,
   fontWeight: styles.fontWeight
 };
 

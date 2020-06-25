@@ -1,5 +1,16 @@
 import styles from "./styles.jsx";
 
+const symbols = {
+  arrow_down:   "􀄩",
+  arrow_up:     "􀄨",
+  outline_down: "􀁸",
+  outline_up:   "􀁶",
+  solid_down:   "􀁹",
+  solid_up:     "􀁷",
+  arrow_dual:   "􀄬",
+}
+  
+
 const speed = type => {
   if (type < 1000) {
     return { val: type.toString().padStart(3, "0"), unit: "kb/s" };
@@ -33,14 +44,14 @@ const render = ({ output }) => {
   if (typeof output === "undefined") return null;
   return (
     <div>
-      <span style={output.kbin > 1000 ? { color: styles.colors.red } : null}>
-        􀄩 {output.mbin}
-        mb
-      </span>
-      &nbsp;&nbsp;
       <span style={output.kbout > 1000 ? { color: styles.colors.red } : null}>
-        􀄨 {output.mbout}
-        mb
+        {Math.round(output.mbout)}<span style={{fontSize: "9px"}}>mb</span>
+      </span>
+      &nbsp;
+      {symbols.arrow_dual}
+      &nbsp;
+      <span style={output.kbin > 1000 ? { color: styles.colors.red } : null}>
+        {Math.round(output.mbin)}<span style={{fontSize: "9px"}}>mb</span>
       </span>
     </div>
   );
